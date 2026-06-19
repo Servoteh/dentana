@@ -1,0 +1,28 @@
+# 301 redirekti sa starih (2017) URL-ova na novu single-page strukturu.
+# Gasi 500/404 greške na stranama koje Google još ima u indeksu i čuva SEO.
+# Format: [stari put]  [odredište]  [status]
+
+/index.html                                                  /                  301
+/usluge.html                                                 /#usluge           301
+/o-nama.html                                                 /#o-nama           301
+/galerija.html                                               /#galerija         301
+/vesti.html                                                  /                  301
+/kontakt.html                                                /#kontakt          301
+
+# Protetika — stare pojedinačne strane radova
+/metalokeramicke-krunice.html                                /#protetika        301
+/kompozitna-faseta.html                                      /#protetika        301
+/bezmetalne-krune-i-mostovi.html                             /#protetika        301
+/totalna-proteza-i-bezmetalni-most.html                      /#protetika        301
+/metalokeramicki-i-cirkumparni-mostovi.html                  /#protetika        301
+/metalokeramicki-most.html                                   /#protetika        301
+/totalne-proteze.html                                        /#protetika        301
+/livena-nadogradnja-i-metalokeramicka-krunica.html           /#protetika        301
+/bezmetalne-krunice-i-metalokeramicki-most.html              /#protetika        301
+/kompositna-faseta-i-nadogradnja.html                        /#protetika        301
+/metalokeramicki-most-sa-izbeljivanjem.html                  /#protetika        301
+/popravka-livenom-nadogradnjom-i-metalokeramickom-krunicom.html  /#protetika    301
+
+# Parodontologija / pregledi
+/uklanjanje-cvrstih-i-mekih-naslaga.html                     /#parodontologija  301
+/izbeljivanje-zuba.html                                      /#usluge           301
