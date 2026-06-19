@@ -7,6 +7,8 @@ img/*.jpg
 doktorke/
 Nove Ana telefon/
 favicon-32.png
+.wrangler/
+.dev.vars
 .DS_Store
 Thumbs.db
 

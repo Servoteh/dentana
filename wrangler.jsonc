@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dentana",
+  "main": "worker.js",
+  "compatibility_date": "2026-06-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    "exclude": [
+      ".git/**",
+      ".wrangler/**",
+      "worker.js",
+      "functions/**",
+      "tools/**",
+      "DEPLOY.md",
+      "img/*.jpg",
+      "*.zip",
+      "*.docx",
+      "doktorke/**",
+      "Nove Ana telefon/**",
+      "site/**",
+      "extracted-final/**"
+    ]
+  }
+}

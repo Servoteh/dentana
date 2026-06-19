@@ -46,8 +46,8 @@ git push -u origin main
 
 ## 4. Custom domen
 
-1. Pages projekat → **Custom domains** → dodaj `dentana.rs` i `www.dentana.rs`
-2. `_redirects` automatski preusmerava `www` → `dentana.rs`
+1. Pages/Workers projekat → **Custom domains** → dodaj `dentana.rs` i `www.dentana.rs`
+2. U Cloudflare dashboard podesi **Redirect Rules** ili primary domain da `www` ide na `dentana.rs` (Wrangler `_redirects` podržava samo relativne putanje)
 
 ## 5. DNS (VAŽNO — email ostaje na starom serveru)
 
