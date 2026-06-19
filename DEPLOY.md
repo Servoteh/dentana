@@ -50,9 +50,11 @@ Sajt se deploy-uje kao **Cloudflare Worker** sa statičkim assetima:
 
 | Varijabla | Vrednost |
 |-----------|----------|
-| `RESEND_API_KEY` | API ključ |
-| `BOOKING_TO` | `info@dentana.rs` |
-| `BOOKING_FROM` | `Dentana Pro <noreply@dentana.rs>` *(posle verifikacije domena)* |
+| `RESEND_API_KEY` | API ključ *(Cloudflare Secrets — ručno)* |
+| `BOOKING_TO` | `info@dentana.rs` *(u wrangler.jsonc)* |
+| `BOOKING_FROM` | `Dentana Pro <noreply@dentana.rs>` *(u wrangler.jsonc)* |
+
+> `RESEND_API_KEY` ostaje Secret u Cloudflare dashboardu. `BOOKING_*` se deploy-uju iz `wrangler.jsonc` pri svakom push-u.
 
 3. Pre verifikacije domena koristi se fallback `onboarding@resend.dev`
 

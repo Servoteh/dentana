@@ -143,9 +143,9 @@ dentana/
 
 | Varijabla | Vrednost | Status |
 |-----------|----------|--------|
-| `RESEND_API_KEY` | Resend API ključ | ✅ podešeno |
-| `BOOKING_TO` | `info@dentana.rs` | proveriti |
-| `BOOKING_FROM` | `Dentana Pro <noreply@dentana.rs>` | posle Resend verifikacije |
+| `RESEND_API_KEY` | Resend API ključ | ✅ u Cloudflare Secrets (ručno) |
+| `BOOKING_TO` | `info@dentana.rs` | ✅ u `wrangler.jsonc` |
+| `BOOKING_FROM` | `Dentana Pro <noreply@dentana.rs>` | ✅ u `wrangler.jsonc` |
 
 ---
 

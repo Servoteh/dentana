@@ -7,6 +7,10 @@
   "observability": {
     "enabled": true
   },
+  "vars": {
+    "BOOKING_TO": "info@dentana.rs",
+    "BOOKING_FROM": "Dentana Pro <noreply@dentana.rs>"
+  },
   "assets": {
     "directory": ".",
     "exclude": [

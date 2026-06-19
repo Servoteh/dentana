@@ -69,7 +69,7 @@ export async function onRequestPost(context) {
   }
 
   const to = env.BOOKING_TO || 'info@dentana.rs';
-  const from = env.BOOKING_FROM || 'Dentana Pro <onboarding@resend.dev>';
+  const from = env.BOOKING_FROM || 'Dentana Pro <noreply@dentana.rs>';
   const subject = 'Zakazivanje termina — Dentana Pro';
   const text = [
     'Novi zahtev za termin sa sajta dentana.rs',
