@@ -2,19 +2,26 @@
 
 Repozitorijum: **https://github.com/Servoteh/dentana**
 
-Detaljan status i checklist: **[STATUS.md](./STATUS.md)**
+Status i plan: **[STATUS.md](./STATUS.md)**
 
 ---
 
-## Arhitektura
+## Arhitektura (jun 2026)
 
-Sajt se deploy-uje kao **Cloudflare Worker** sa statičkim assetima:
+```
+Korisnik → dentana.rs (Cloudflare DNS)
+         → Cloudflare Worker (dentana)
+              ├─ /           → statički fajlovi (HTML, CSS, JS, WebP)
+              └─ /api/booking → Resend → info@dentana.rs
+```
 
-- `worker.js` — servira fajlove + `/api/booking`
-- `wrangler.jsonc` — konfiguracija
-- Deploy komanda: `npx wrangler deploy`
+| Servis | Uloga |
+|--------|-------|
+| **Cloudflare Workers** | Hosting sajta |
+| **Resend** (servoteh.com) | Slanje emaila sa forme |
+| **VPS 176.9.113.163** | Samo **primanje** emaila (MX/mail) |
 
-> **Napomena:** `_redirects` ne sme sadržati apsolutne URL-ove (`https://...`). Preusmeravanje `www` → apex podesi u Cloudflare **Redirect Rules**.
+Deploy komanda: `npx wrangler deploy` (Git push → automatski build)
 
 ---
 
@@ -22,76 +29,85 @@ Sajt se deploy-uje kao **Cloudflare Worker** sa statičkim assetima:
 
 | Fajl / folder | Namena |
 |---------------|--------|
-| `index.html`, `style.css`, `script.js` | Glavni sajt |
-| `img/` | WebP slike + SVG logotipi |
+| `index.html`, `style.css`, `script.js` | Sajt |
+| `img/` | WebP + SVG |
 | `fonts/`, `fonts.css` | Self-hosted fontovi |
-| `worker.js` | Worker router |
-| `wrangler.jsonc` | Cloudflare konfiguracija |
-| `functions/api/booking.js` | Resend API za formu |
-| `_headers` | Security + cache headers |
-| `robots.txt`, `sitemap.xml` | SEO |
-| `tools/` | `npm run build` — optimizacija slika/fontova |
+| `worker.js` | Router (statika + API) |
+| `wrangler.jsonc` | Konfiguracija + env vars |
+| `functions/api/booking.js` | Resend API |
+| `_headers` | Security + cache |
+| `_redirects` | Prazan — www redirect u Cloudflare Rules |
+| `tools/` | `npm run build` — optimizacija |
 
 ---
 
-## GitHub → Cloudflare (trenutni setup)
+## Env varijable
 
-1. Repo: **Servoteh/dentana**, grana `main`
-2. Cloudflare Workers → projekat **dentana**
-3. Build/deploy komanda: `npx wrangler deploy`
-4. Custom domains: `dentana.rs`, `www.dentana.rs`
+### U `wrangler.jsonc` (automatski deploy)
 
----
+```jsonc
+"vars": {
+  "BOOKING_TO": "info@dentana.rs",
+  "BOOKING_FROM": "Dentana Pro <noreply@servoteh.com>"
+}
+```
 
-## Resend (forma)
+### U Cloudflare dashboard (ručno)
 
-1. [resend.com](https://resend.com) → API key (Servoteh nalog)
-2. **Domains** → verifikuj **`servoteh.com`** (DKIM/SPF u DNS-u za servoteh.com)
-3. Workers → **dentana** → **Settings** → **Variables**:
+Workers → **dentana** → Settings → **Variables and Secrets**:
 
-| Varijabla | Vrednost |
-|-----------|----------|
-| `RESEND_API_KEY` | API ključ *(Cloudflare Secrets — ručno)* |
-| `BOOKING_TO` | `info@dentana.rs` *(u wrangler.jsonc)* |
-| `BOOKING_FROM` | `Dentana Pro <noreply@servoteh.com>` *(u wrangler.jsonc)* |
+| Name | Type | Value |
+|------|------|-------|
+| `RESEND_API_KEY` | Secret | `re_...` |
 
-> `RESEND_API_KEY` ostaje Secret u Cloudflare dashboardu. `BOOKING_*` se deploy-uju iz `wrangler.jsonc` pri svakom push-u.
-
-3. Pre verifikacije domena koristi se fallback `onboarding@resend.dev`
+Posle promene Secrets → **Redeploy**.
 
 ---
 
-## DNS (email ostaje na VPS-u)
+## Resend
+
+1. Nalog: **Servoteh** na [resend.com](https://resend.com)
+2. Domen: **`servoteh.com`** verifikovan (DKIM/SPF u DNS-u servoteh.com)
+3. **Ne treba** verifikovati dentana.rs za slanje forme
+4. Logovi: Resend → **Logs** → provera Delivered/Bounced
+
+---
+
+## DNS (Cloudflare — dentana.rs)
 
 | Zapis | Vrednost | Proxy |
 |-------|----------|-------|
-| `@`, `www` | Worker custom domain | Proxied |
+| `@` | Worker custom domain | Proxied |
+| `www` | Worker custom domain ili CNAME → `dentana.rs` | Proxied |
 | `mail` A | `176.9.113.163` | **DNS only** |
-| MX | `mail.dentana.rs` (5) | DNS only |
-| TXT | SPF (+ Resend kad verifikuješ) | — |
+| MX `@` | `mail.dentana.rs` (5) | DNS only |
+| TXT | SPF (postojeći, bez Resend dela za dentana.rs) | — |
 
-**Ne briši** MX i A za `mail`.
+**www redirect (preporučeno):** Cloudflare → Rules → Redirect Rules → `www.dentana.rs` → `https://dentana.rs` (301)
 
 ---
 
 ## SSL i performanse
 
-- **SSL/TLS** → Full (strict)
-- **Always Use HTTPS** → ON
-- **Auto Minify** → HTML, CSS, JS
-- **Brotli** → ON
+- SSL/TLS → **Full (strict)**
+- Always Use HTTPS → **ON**
+- Auto Minify → HTML, CSS, JS
+- Brotli → ON
 
 ---
 
-## Ponovna optimizacija slika
+## Workflow izmene sajta
 
 ```bash
-cd tools
-npm install
-npm run build
-git add img/ fonts.css og-image.jpg favicon.*
-git commit -m "Re-optimize assets"
-git push
+# 1. Edituj fajlove lokalno
+# 2. Ako menjaš slike:
+cd tools && npm run build
+
+# 3. Commit + push
+git add .
+git commit -m "Opis izmene"
+git push origin main
+# → Cloudflare automatski deploy-uje
 ```
 
 ---
@@ -102,21 +118,30 @@ git push
 npx wrangler dev
 ```
 
-Kreiraj `.dev.vars`:
+`.dev.vars` (ne commituj):
 
 ```
 RESEND_API_KEY=re_...
-BOOKING_TO=info@dentana.rs
 ```
 
 ---
 
-## Provera posle deploya
+## Provera
 
 ```powershell
 curl.exe -sI https://dentana.rs/ | findstr cf-ray
+curl.exe -sI https://www.dentana.rs/ | findstr cf-ray
 curl.exe -s https://dentana.rs/script.js | findstr api/booking
 ```
 
-- `cf-ray` → Cloudflare aktivan
-- `/api/booking` u script.js → nova forma (ne mailto)
+---
+
+## Poznati problemi i rešenja
+
+| Problem | Rešenje |
+|---------|---------|
+| Forma otvara mailto | Stari nginx — sačekaj DNS / incognito |
+| „Email servis nije konfigurisan" | Dodaj `RESEND_API_KEY` Secret + redeploy |
+| „Slanje emaila nije uspelo" | Verifikuj servoteh.com u Resend-u |
+| www „non-existent domain" | Dodaj www Worker domen ili CNAME |
+| Deploy fail `_redirects` | Samo relativne putanje — www u Redirect Rules |
