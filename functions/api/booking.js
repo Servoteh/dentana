@@ -51,6 +51,27 @@ export async function onRequestPost(context) {
     return json({ ok: true });
   }
 
+  // Cloudflare Turnstile (opciono — aktivira se samo ako je TURNSTILE_SECRET postavljen)
+  if (env.TURNSTILE_SECRET) {
+    const token = String(body.turnstileToken || '');
+    if (!token) {
+      return json({ error: 'Potvrdite da niste robot i pokušajte ponovo.' }, 400);
+    }
+    try {
+      const verify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: env.TURNSTILE_SECRET, response: token }),
+      });
+      const result = await verify.json();
+      if (!result.success) {
+        return json({ error: 'Provera protiv neželjene pošte nije uspela. Osvežite stranicu i pokušajte ponovo.' }, 400);
+      }
+    } catch (e) {
+      return json({ error: 'Provera protiv neželjene pošte trenutno nije dostupna. Pozovite nas ili pišite na WhatsApp.' }, 502);
+    }
+  }
+
   const ime = String(body.ime || '').trim();
   const telefon = String(body.telefon || '').trim();
   const email = String(body.email || '').trim();

@@ -1431,3 +1431,85 @@ footer {
 .eyebrow--sm { margin-bottom: 10px; }
 .footer-sep  { color: rgba(255,255,255,0.35); margin: 0 14px; }
 .text-muted  { color: var(--muted); }
+
+/* ─── FAQ (Faza 1.2) ─── */
+.faq-list { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
+.faq-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  flex: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--accent-deep);
+  transition: transform 0.25s ease;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.faq-answer { padding: 0 24px 20px; }
+.faq-answer p { font-size: 0.95rem; }
+
+/* ─── Utisci pacijenata (Faza 1.1) ─── */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+.review-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+.review-stars { color: #e0a800; letter-spacing: 2px; font-size: 1rem; margin-bottom: 12px; }
+.review-card blockquote { font-size: 1.02rem; line-height: 1.7; color: var(--text); font-weight: 300; }
+.review-card figcaption { margin-top: 16px; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+
+/* ─── Form: inline greške + saglasnost (Faza 1.3) ─── */
+.field-error { font-size: 0.75rem; color: #b42318; min-height: 0; display: none; }
+.field.has-error input,
+.field.has-error select { border-color: #e3a8a0; box-shadow: 0 0 0 4px rgba(180,35,24,0.08); }
+.field.has-error .field-error { display: block; }
+.field-consent { grid-column: 1 / -1; display: flex; gap: 10px; align-items: flex-start; }
+.field-consent input { width: auto; margin-top: 3px; flex: none; }
+.field-consent label {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.field-consent.has-error label { color: #b42318; }
+
+/* ─── Reduced motion (Faza 2.2) ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js-ready .reveal { opacity: 1 !important; transform: none !important; }
+}

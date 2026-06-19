@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────
 // Dentana Pro — script.js
-// Verzija: v40 | April 2026
+// Verzija: v42 | jun 2026 (Faza 1-2: validacija forme, a11y, perf, Turnstile)
 // Sve event handlere vežemo ovde — nema inline
 // onclick/onload atributa u HTML-u.
 // ─────────────────────────────────────────────
@@ -42,23 +42,33 @@
   var uslugeSub = document.getElementById('mobUslugeSub');
   if (!menu) return;
 
+  function closeMenu() {
+    menu.classList.remove('open');
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+  }
+
   if (hamburger) {
     hamburger.addEventListener('click', function () {
-      menu.classList.toggle('open');
+      var open = menu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 
   if (uslugeBtn && uslugeSub) {
     uslugeBtn.addEventListener('click', function () {
-      uslugeBtn.classList.toggle('open');
+      var open = uslugeBtn.classList.toggle('open');
       uslugeSub.classList.toggle('open');
+      uslugeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 
   document.querySelectorAll('.mob-close-link').forEach(function (link) {
-    link.addEventListener('click', function () {
-      menu.classList.remove('open');
-    });
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Esc zatvara mobilni meni
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
   });
 }());
 
@@ -123,6 +133,26 @@
 
   var statusEl = document.getElementById('booking-status');
   var defaultNote = statusEl ? statusEl.textContent : '';
+  var datumEl = document.getElementById('datum');
+  var consentEl = document.getElementById('saglasnost');
+
+  // Datum: ne dozvoli izbor prošlog datuma
+  if (datumEl) {
+    var t = new Date();
+    var min = t.getFullYear() + '-' +
+      ('0' + (t.getMonth() + 1)).slice(-2) + '-' +
+      ('0' + t.getDate()).slice(-2);
+    datumEl.setAttribute('min', min);
+  }
+
+  function setError(fieldEl, on) {
+    if (fieldEl) fieldEl.classList.toggle('has-error', !!on);
+  }
+
+  function fieldOf(id) {
+    var el = document.getElementById(id);
+    return el ? el.closest('.field') : null;
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -131,13 +161,22 @@
     var telefon  = document.getElementById('telefon').value.trim();
     var email    = document.getElementById('email').value.trim();
     var usluga   = document.getElementById('usluga').value;
-    var datum    = document.getElementById('datum').value;
+    var datum    = datumEl ? datumEl.value : '';
     var napomena = document.getElementById('napomena').value.trim();
     var website  = document.getElementById('website').value.trim();
     var btn      = form.querySelector('button[type="submit"]');
 
-    if (!ime || !telefon) {
-      alert('Molimo unesite ime i broj telefona.');
+    // Inline validacija
+    var emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    var consentOk = !consentEl || consentEl.checked;
+    setError(fieldOf('ime'), !ime);
+    setError(fieldOf('telefon'), !telefon);
+    setError(fieldOf('email'), !emailOk);
+    setError(document.getElementById('field-saglasnost'), !consentOk);
+
+    if (!ime || !telefon || !emailOk || !consentOk) {
+      var firstErr = form.querySelector('.field.has-error input');
+      if (firstErr) firstErr.focus();
       return;
     }
 
@@ -146,6 +185,8 @@
       statusEl.textContent = 'Slanje zahteva...';
       statusEl.className = 'booking-note';
     }
+
+    var tsEl = form.querySelector('[name="cf-turnstile-response"]');
 
     fetch('/api/booking', {
       method: 'POST',
@@ -157,7 +198,8 @@
         usluga: usluga,
         datum: datum,
         napomena: napomena,
-        website: website
+        website: website,
+        turnstileToken: tsEl ? tsEl.value : ''
       })
     })
       .then(function (r) {
@@ -187,12 +229,20 @@
       });
   });
 
-  form.addEventListener('input', function () {
+  form.addEventListener('input', function (e) {
     if (statusEl && statusEl.className.indexOf('booking-note--') > -1) {
       statusEl.textContent = defaultNote;
       statusEl.className = 'booking-note';
     }
+    var f = e.target.closest('.field');
+    if (f) f.classList.remove('has-error');
   });
+  if (consentEl) {
+    consentEl.addEventListener('change', function () {
+      var f = document.getElementById('field-saglasnost');
+      if (f) f.classList.remove('has-error');
+    });
+  }
 }());
 
 
@@ -228,16 +278,22 @@
     if (lbImg.complete) lbImg.style.opacity = '1';
   }
 
+  var lbLastFocus = null;
+
   function lbOpen(idx) {
     current = idx;
+    lbLastFocus = document.activeElement;
     lbShow();
     overlay.classList.add('lb-open');
     document.body.style.overflow = 'hidden';
+    var closeBtn = document.getElementById('lb-close');
+    if (closeBtn) closeBtn.focus();
   }
 
   function lbClose() {
     overlay.classList.remove('lb-open');
     document.body.style.overflow = '';
+    if (lbLastFocus && lbLastFocus.focus) lbLastFocus.focus();
   }
 
   function lbPrev() { current = (current - 1 + total) % total; lbShow(); }
@@ -411,7 +467,13 @@ function initHirurgijaSlider(sliderId, dotsId, prevId, nextId) {
     if (dots[cur]) dots[cur].classList.add('active');
   }
 
-  function startAuto() { timer = setInterval(function () { goTo(cur + 1); }, 4500); }
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function startAuto() {
+    if (reduceMotion) return;
+    stopAuto();
+    timer = setInterval(function () { goTo(cur + 1); }, 4500);
+  }
   function stopAuto()  { clearInterval(timer); }
 
   var prevBtn = document.getElementById(prevId);
@@ -435,7 +497,14 @@ function initHirurgijaSlider(sliderId, dotsId, prevId, nextId) {
     if (Math.abs(dx) > 40) { stopAuto(); dx < 0 ? goTo(cur + 1) : goTo(cur - 1); startAuto(); }
   }, { passive: true });
 
-  startAuto();
+  // Auto-play radi samo dok je slajder u vidnom polju
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? startAuto() : stopAuto(); });
+    }, { threshold: 0.2 }).observe(slider);
+  } else {
+    startAuto();
+  }
 }
 
 initHirurgijaSlider('pregledSlider',         'pregledDots',         'pregledPrev',         'pregledNext');
@@ -478,7 +547,12 @@ initHirurgijaSlider('parodontologijaSlider', 'parodontologijaDots', 'parodontolo
     if (dotEls[esCur]) dotEls[esCur].classList.add('estetika-dot-active');
   }
 
-  function esStartAuto() { esTimer = setInterval(function () { esGoTo(esCur + 1); }, 5000); }
+  var esReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function esStartAuto() {
+    if (esReduceMotion) return;
+    esStopAuto();
+    esTimer = setInterval(function () { esGoTo(esCur + 1); }, 5000);
+  }
   function esStopAuto()  { clearInterval(esTimer); }
 
   var esPrevBtn = document.getElementById('esPrev');
@@ -507,7 +581,13 @@ initHirurgijaSlider('parodontologijaSlider', 'parodontologijaDots', 'parodontolo
   slider.addEventListener('mouseenter', esStopAuto);
   slider.addEventListener('mouseleave', esStartAuto);
 
-  esStartAuto();
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? esStartAuto() : esStopAuto(); });
+    }, { threshold: 0.2 }).observe(slider);
+  } else {
+    esStartAuto();
+  }
 
   // Lightbox
   var lb    = document.getElementById('es-lb');
@@ -517,7 +597,10 @@ initHirurgijaSlider('parodontologijaSlider', 'parodontologijaDots', 'parodontolo
   var lbCtr = document.getElementById('es-lb-counter');
   var lbCur = 0;
 
+  var esLbLastFocus = null;
+
   function esLbOpen(idx) {
+    if (!lb.classList.contains('es-lb-open')) esLbLastFocus = document.activeElement;
     lbCur             = ((idx % esN) + esN) % esN;
     lbImg.src         = esSrcs[lbCur];
     lbImg.alt         = esAlts[lbCur];
@@ -525,11 +608,14 @@ initHirurgijaSlider('parodontologijaSlider', 'parodontologijaDots', 'parodontolo
     lbCtr.textContent = (lbCur + 1) + ' / ' + esN;
     lb.classList.add('es-lb-open');
     document.body.style.overflow = 'hidden';
+    var closeBtn = document.getElementById('es-lb-close');
+    if (closeBtn) closeBtn.focus();
   }
 
   function esLbClose() {
     lb.classList.remove('es-lb-open');
     document.body.style.overflow = '';
+    if (esLbLastFocus && esLbLastFocus.focus) esLbLastFocus.focus();
   }
 
   Array.prototype.forEach.call(slideEls, function (el, i) {

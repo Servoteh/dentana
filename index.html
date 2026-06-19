@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dentana Pro | Stomatološka ordinacija Beograd</title>
-  <!-- Dentana Pro v41 — Cloudflare Pages | WebP, SEO, booking API -->
+  <!-- Dentana Pro v42 — jun 2026 | Faza 1-2: FAQ+schema, dorada forme (saglasnost/validacija), a11y, perf, analitika/Turnstile scaffold -->
   <meta name="description" content="Dentana Pro je stomatološka ordinacija u Beogradu — Republička 1a, Sunčana Padina, u blizini Banovog brda i Žarkova — sa pažljivo planiranom terapijom, individualnim pristupom i savremenom stomatološkom negom za decu i odrasle.">
   <link rel="canonical" href="https://dentana.rs/">
   <!-- Favicon -->
@@ -30,16 +30,22 @@
   {
     "@context": "https://schema.org",
     "@type": "Dentist",
+    "@id": "https://dentana.rs/#ordinacija",
     "name": "Dentana Pro",
+    "description": "Stomatološka ordinacija u Beogradu — pažljivo planirana terapija, individualni pristup i savremena stomatološka nega za decu i odrasle.",
     "url": "https://dentana.rs/",
+    "logo": "https://dentana.rs/favicon.svg",
     "image": "https://dentana.rs/og-image.jpg",
     "telephone": "+38163349128",
     "email": "info@dentana.rs",
     "priceRange": "$$",
+    "currenciesAccepted": "RSD, EUR",
+    "foundingDate": "2013",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Republička 1a",
       "addressLocality": "Beograd",
+      "addressRegion": "Beograd",
       "postalCode": "11030",
       "addressCountry": "RS"
     },
@@ -48,15 +54,102 @@
       "latitude": 44.768,
       "longitude": 20.413
     },
+    "hasMap": "https://www.google.com/maps?q=Republi%C4%8Dka+1a,+Beograd",
+    "areaServed": [
+      { "@type": "City", "name": "Beograd" },
+      { "@type": "AdministrativeArea", "name": "Čukarica" }
+    ],
+    "availableLanguage": ["sr", "fr", "en"],
+    "medicalSpecialty": [
+      "Dentistry",
+      "Orthodontic",
+      "Endodontic",
+      "Periodontic",
+      "Prosthodontic",
+      "OralSurgery",
+      "PediatricDentistry"
+    ],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "telephone": "+381112360421",
+      "contactType": "reservations",
+      "availableLanguage": ["sr", "fr", "en"]
+    }],
     "openingHoursSpecification": [{
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
       "opens": "11:00",
       "closes": "19:00"
     }],
-    "sameAs": ["https://wa.me/38163349128"]
+    "sameAs": [
+      "https://wa.me/38163349128"
+    ]
   }
   </script>
+  <!--
+    SEO TODO (Faza 1.4):
+    1. Proveriti geo koordinate (44.768, 20.413 su zaokružene) — uzeti tačne sa Google Maps za Republičku 1a.
+    2. U "sameAs" dodati prave linkove ka Instagram / Facebook / Google Business profilu kad budu dostupni.
+    3. NE dodavati "aggregateRating" dok ne postoje stvarne recenzije — lažni rejting krši Google smernice.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://dentana.rs/",
+    "name": "Dentana Pro",
+    "inLanguage": "sr-RS"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Kako mogu da zakažem pregled?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Termin možete zakazati telefonom na +381 63 349 128 i +381 11 236-0421, putem WhatsApp poruke ili slanjem zahteva kroz formular na sajtu. Javljamo vam se radi potvrde termina i dogovora oko dolaska." }
+      },
+      {
+        "@type": "Question",
+        "name": "Šta obuhvata prvi pregled?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Na prvom pregledu procenjujemo stanje zuba, desni i zagrižaja, po potrebi uz odgovarajuće snimke, i zajedno sa vama pravimo jasan plan terapije, kako biste pre početka rada razumeli sve korake." }
+      },
+      {
+        "@type": "Question",
+        "name": "Da li primate decu i od kog uzrasta?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Da. Najmlađim pacijentima pristupamo strpljivo i bez žurbe. Preporučujemo prve, kratke kontrolne posete od ranog uzrasta, da bi se dete naviklo i steklo poverenje." }
+      },
+      {
+        "@type": "Question",
+        "name": "Koliko traje terapija implantatom?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nakon ugradnje implanta sledi period zarastanja (oseointegracije) koji zavisi od kliničkog nalaza, nakon čega se izrađuje protetski rad. Tačan tok i trajanje određujemo individualno na osnovu pregleda." }
+      },
+      {
+        "@type": "Question",
+        "name": "Da li radite i estetiku lica?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Da, kao dopunsku uslugu uz stomatologiju nudimo botoks, hijaluronske filere i tretmane za poboljšanje tonusa kože (mezoterapija/biorevitalizacija), uz prirodan i usklađen rezultat." }
+      },
+      {
+        "@type": "Question",
+        "name": "Gde se nalazite?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ordinacija je na adresi Republička 1a, Beograd — Sunčana Padina, u blizini Banovog brda i Žarkova." }
+      },
+      {
+        "@type": "Question",
+        "name": "Kakvo je radno vreme?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Radimo radnim danima (ponedeljak–petak) od 11:00 do 19:00. Subotom i nedeljom ne radimo." }
+      }
+    ]
+  }
+  </script>
+  <!--
+    FAZA 2.3 — ANALITIKA (preporuka: Plausible — privacy-friendly, bez cookie banera, GDPR ok)
+    Kada otvorite nalog na plausible.io, uklonite komentar i zamenite "dentana.rs" domenom:
+    <script defer data-domain="dentana.rs" src="https://plausible.io/js/script.outbound-links.js"></script>
+    Alternativa (GA4): traži cookie banner i dodatnu konfiguraciju privatnosti.
+  -->
 </head>
 <body>
 <div class="mobile-menu" id="mobileMenu">
@@ -82,7 +175,7 @@
 <header class="site-header" id="siteHeader">
   <div class="container nav">
     <a href="#" class="nav-logo" aria-label="Dentana Pro">
-      <img src="img/img_01.svg" alt="Dentana Pro" loading="lazy">
+      <img src="img/img_01.svg" alt="Dentana Pro" width="150" height="40">
     </a>
     <ul class="nav-links" aria-label="Glavna navigacija">
       <li class="nav-item">
@@ -103,7 +196,7 @@
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
     <a class="nav-cta" href="#zakazivanje">Zakažite pregled</a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Meni" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -160,32 +253,32 @@
       </div>
       <div class="services-grid">
         <a href="#pregledi-i-lecenje-zuba" class="service-card hirurgija-clickable reveal">
-          <div class="service-icon">🔧</div>
+          <div class="service-icon" aria-hidden="true">🔧</div>
           <h3>Pregledi i lečenje zuba</h3>
           <p>Redovni pregledi i pravovremena terapija pomažu da se problemi otkriju na vreme i reše uz što manje invazivnih zahvata. Fokus nam je na jasnoj proceni stanja i racionalnom planu lečenja.</p>
         </a>
         <a href="#protetika" class="service-card hirurgija-clickable reveal">
-          <div class="service-icon">👑</div>
+          <div class="service-icon" aria-hidden="true">👑</div>
           <h3>Protetika</h3>
           <p>Krunice, mostovi i proteze planiraju se tako da vrate sigurnost u zagrižaju, prirodan izgled i osećaj komfora. Posebna pažnja posvećujemo preciznosti, udobnosti i dugoročnom kvalitetu.</p>
         </a>
         <a href="#oralna-hirurgija" class="service-card hirurgija-clickable reveal">
-          <div class="service-icon">🏥</div>
+          <div class="service-icon" aria-hidden="true">🏥</div>
           <h3>Oralna hirurgija</h3>
           <p>Oralno-hirurške intervencije izvodimo uz pažljivo planiranje, jasan razgovor sa pacijentom i praćenje nakon terapije, kako bi ceo proces bio što mirniji i predvidljiviji.</p>
         </a>
         <a href="#ortodoncija" class="service-card hirurgija-clickable reveal">
-          <div class="service-icon">📐</div>
+          <div class="service-icon" aria-hidden="true">📐</div>
           <h3>Ortodoncija</h3>
           <p>Ortodontska terapija doprinosi pravilnom zagrižaju, lakšem održavanju higijene i lepšem osmehu. Svaki plan se izrađuje individualno, sa pažnjom prema funkciji i estetici.</p>
         </a>
         <a href="#decja-stomatologija" class="service-card hirurgija-clickable reveal">
-          <div class="service-icon">🧒</div>
+          <div class="service-icon" aria-hidden="true">🧒</div>
           <h3>Dečja stomatologija</h3>
           <p>Najmlađim pacijentima pristupamo strpljivo, nežno i bez žurbe. Cilj nam je da dete ordinaciju doživi kao sigurno mesto i da od najranijeg uzrasta stekne poverenje i naviku redovnih kontrola.</p>
         </a>
         <a href="#parodontologija" class="service-card hirurgija-clickable reveal">
-          <div class="service-icon">🛡</div>
+          <div class="service-icon" aria-hidden="true">🛡</div>
           <h3>Parodontologija</h3>
           <p>Zdrave desni su osnova stabilnog i lepog osmeha. Terapiju parodontalnih problema prilagođavamo kliničkom stanju, sa ciljem da sačuvamo potporu zuba i unapredimo celokupno oralno zdravlje.</p>
         </a>
@@ -211,15 +304,15 @@
           </div>
           <div class="check-list" style="margin-top:28px;">
             <div class="check-item">
-              <div class="check-icon">✓</div>
+              <div class="check-icon" aria-hidden="true">✓</div>
               <div><strong>Individualan plan terapije</strong><span>Prilagođen stanju zuba, željama i tempu svakog pacijenta ponaosob.</span></div>
             </div>
             <div class="check-item">
-              <div class="check-icon">✓</div>
+              <div class="check-icon" aria-hidden="true">✓</div>
               <div><strong>Savremena oprema i materijali</strong><span>Terapija koja kombinuje preciznost, dugotrajnost i prirodan izgled rezultata.</span></div>
             </div>
             <div class="check-item">
-              <div class="check-icon">✓</div>
+              <div class="check-icon" aria-hidden="true">✓</div>
               <div><strong>Mirna i jasna komunikacija</strong><span>Svaki korak terapije objašnjavamo pre nego što počnemo — nema iznenađenja.</span></div>
             </div>
           </div>
@@ -714,6 +807,80 @@
         </div>
     </div>
   </section>
+<!-- ════════════════════════════════════════════════════════════════
+     FAZA 1.1 — UTISCI PACIJENATA (ŠABLON)
+     Sekcija je namerno ZAKOMENTARISANA dok ne dobijete prave recenzije.
+     Kada budete imali stvarne utiske (npr. sa Google profila), uklonite
+     komentar i zamenite tekst/imena. Tek tada se sme dodati i
+     "aggregateRating" u JSON-LD (lažne recenzije krše Google smernice).
+
+  <section class="section reviews" id="utisci" style="background:var(--surface);">
+    <div class="container">
+      <div class="section-header-center--mb">
+        <div class="eyebrow reveal">Utisci pacijenata</div>
+        <h2 class="reveal">Šta kažu <em>naši pacijenti</em></h2>
+      </div>
+      <div class="reviews-grid">
+        <figure class="review-card reveal">
+          <div class="review-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„[Ovde ide stvarna recenzija pacijenta.]"</blockquote>
+          <figcaption>— Ime P.</figcaption>
+        </figure>
+        <figure class="review-card reveal">
+          <div class="review-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„[Ovde ide stvarna recenzija pacijenta.]"</blockquote>
+          <figcaption>— Ime P.</figcaption>
+        </figure>
+        <figure class="review-card reveal">
+          <div class="review-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„[Ovde ide stvarna recenzija pacijenta.]"</blockquote>
+          <figcaption>— Ime P.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+     ════════════════════════════════════════════════════════════════ -->
+
+<section class="section faq" id="cesta-pitanja" style="background:var(--surface);">
+    <div class="container">
+      <div class="section-header-center--mb">
+        <div class="eyebrow reveal">Česta pitanja</div>
+        <h2 class="reveal">Pitanja i <em>odgovori</em></h2>
+        <p class="reveal" style="margin-top:14px;font-size:1rem;">Najčešća pitanja pacijenata pre prvog dolaska. Ako ne nađete odgovor, slobodno nas pozovite ili pišite na WhatsApp.</p>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>Kako mogu da zakažem pregled?</summary>
+          <div class="faq-answer"><p>Termin možete zakazati telefonom na +381 63 349 128 i +381 11 236-0421, putem WhatsApp poruke ili slanjem zahteva kroz formular na ovoj stranici. Javljamo vam se radi potvrde termina i dogovora oko dolaska.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Šta obuhvata prvi pregled?</summary>
+          <div class="faq-answer"><p>Na prvom pregledu procenjujemo stanje zuba, desni i zagrižaja, po potrebi uz odgovarajuće snimke, i zajedno sa vama pravimo jasan plan terapije. Cilj nam je da pre početka rada razumete sve korake — bez iznenađenja.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Da li primate decu i od kog uzrasta?</summary>
+          <div class="faq-answer"><p>Da. Najmlađim pacijentima pristupamo strpljivo i bez žurbe, kako bi ordinaciju doživeli kao sigurno mesto. Preporučujemo prve, kratke kontrolne posete od ranog uzrasta, da bi se dete naviklo i steklo poverenje.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Koliko traje terapija implantatom?</summary>
+          <div class="faq-answer"><p>Nakon ugradnje implanta sledi period zarastanja (oseointegracije) koji zavisi od kliničkog nalaza, nakon čega se izrađuje protetski rad. Tačan tok i trajanje terapije određujemo individualno, na osnovu pregleda i plana terapije.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Da li radite i estetiku lica?</summary>
+          <div class="faq-answer"><p>Da, kao dopunsku uslugu uz stomatologiju nudimo botoks, hijaluronske filere i tretmane za poboljšanje tonusa kože (mezoterapija/biorevitalizacija). Tretmane planiramo tako da rezultat bude prirodan i usklađen s crtama lica.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Gde se nalazite?</summary>
+          <div class="faq-answer"><p>Ordinacija je na adresi Republička 1a, Beograd — Sunčana Padina, u blizini Banovog brda i Žarkova. Tačnu lokaciju i rutu možete videti na mapi u sekciji Kontakt.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Kakvo je radno vreme?</summary>
+          <div class="faq-answer"><p>Radimo radnim danima (ponedeljak–petak) od 11:00 do 19:00. Subotom i nedeljom ne radimo. Termin je najbolje unapred zakazati.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
 <section class="section" id="zakazivanje" style="background: var(--bg);">
     <div class="container">
       <div style="text-align:center; max-width:600px; margin: 0 auto 48px;">
@@ -733,15 +900,18 @@
           <div class="form-grid">
             <div class="field full">
               <label for="ime">Ime i prezime</label>
-              <input type="text" id="ime" placeholder="Vaše ime i prezime">
+              <input type="text" id="ime" name="ime" placeholder="Vaše ime i prezime" required autocomplete="name" aria-describedby="err-ime">
+              <span class="field-error" id="err-ime">Molimo unesite ime i prezime.</span>
             </div>
             <div class="field">
               <label for="telefon">Telefon</label>
-              <input type="tel" id="telefon" placeholder="+381 6x xxx xxxx">
+              <input type="tel" id="telefon" name="telefon" placeholder="+381 6x xxx xxxx" required autocomplete="tel" inputmode="tel" aria-describedby="err-telefon">
+              <span class="field-error" id="err-telefon">Molimo unesite broj telefona.</span>
             </div>
             <div class="field">
               <label for="email">Email</label>
-              <input type="email" id="email" placeholder="vas@email.com">
+              <input type="email" id="email" name="email" placeholder="vas@email.com" autocomplete="email" inputmode="email" aria-describedby="err-email">
+              <span class="field-error" id="err-email">Unesite ispravnu email adresu.</span>
             </div>
             <div class="field full">
               <label for="usluga">Usluga</label>
@@ -763,13 +933,27 @@
             </div>
             <div class="field full">
               <label for="datum">Željeni termin</label>
-              <input type="date" id="datum">
+              <input type="date" id="datum" name="datum">
             </div>
             <div class="field full">
               <label for="napomena">Napomena (opciono)</label>
-              <textarea id="napomena" placeholder="Dodatne informacije ili pitanja..."></textarea>
+              <textarea id="napomena" name="napomena" placeholder="Dodatne informacije ili pitanja..."></textarea>
+            </div>
+            <div class="field field-consent" id="field-saglasnost">
+              <input type="checkbox" id="saglasnost" name="saglasnost" aria-describedby="err-saglasnost">
+              <label for="saglasnost">Saglasan/saglasna sam da Dentana Pro obrađuje moje podatke iz ovog formulara isključivo radi kontaktiranja i zakazivanja termina.
+                <span class="field-error" id="err-saglasnost">Potrebna je saglasnost za obradu podataka.</span>
+              </label>
             </div>
           </div>
+          <!--
+            FAZA 2.3 — Cloudflare Turnstile (besplatan, nevidljiv anti-spam).
+            1) Napravite widget na dash.cloudflare.com → Turnstile i dodajte ovde skriptu i div:
+               <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+               <div class="cf-turnstile" data-sitekey="VAS_SITE_KEY"></div>
+            2) U Cloudflare Secrets dodajte TURNSTILE_SECRET — verifikacija je već pripremljena
+               u functions/api/booking.js (aktivira se automatski kada secret postoji).
+          -->
           <button type="submit" class="btn btn-primary btn-full">Pošaljite zahtev za termin</button>
           <p class="booking-note" id="booking-status">Kontaktiraćemo vas telefonom ili emailom radi potvrde termina.</p>
         </form>
@@ -779,7 +963,7 @@
             <h3>Pronađite <em>nas</em></h3>
             <div class="contact-cards" style="margin-top:20px;">
               <div class="contact-card">
-                <div class="contact-icon">📍</div>
+                <div class="contact-icon" aria-hidden="true">📍</div>
                 <div>
                   <div class="label">Lokacija</div>
                   <div class="value">Republička 1a, Beograd<br><small class="text-muted">Sunčana Padina, u blizini Banovog brda i Žarkova</small></div>
@@ -787,7 +971,7 @@
               </div>
 
               <div class="contact-card">
-                <div class="contact-icon">📞</div>
+                <div class="contact-icon" aria-hidden="true">📞</div>
                 <div>
                   <div class="label">Zakazivanje telefonom</div>
                   <div class="value">
@@ -797,7 +981,7 @@
                 </div>
               </div>
               <div class="contact-card">
-                <div class="contact-icon">✉️</div>
+                <div class="contact-icon" aria-hidden="true">✉️</div>
                 <div>
                   <div class="label">Email</div>
                   <div class="value"><a href="mailto:info@dentana.rs">info@dentana.rs</a></div>
