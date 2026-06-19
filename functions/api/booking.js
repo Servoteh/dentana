@@ -5,6 +5,38 @@ function json(data, status = 200) {
   });
 }
 
+function resendErrorMessage(status, bodyText, from, to) {
+  var msg = '';
+  try {
+    var parsed = JSON.parse(bodyText);
+    msg = String(parsed.message || parsed.error || '').toLowerCase();
+  } catch (e) {
+    msg = String(bodyText || '').toLowerCase();
+  }
+
+  if (status === 401) {
+    return 'Email servis nije ispravno podešen (RESEND_API_KEY). Kontaktirajte ordinaciju telefonom.';
+  }
+
+  if (status === 403) {
+    if (from.indexOf('resend.dev') !== -1) {
+      return 'Test email može stići samo na Resend nalog dok se domen dentana.rs ne verifikuje. Pozovite nas ili pišite na WhatsApp.';
+    }
+    return 'Domen za slanje emaila nije verifikovan u Resend-u (dentana.rs). Pozovite nas ili pišite na WhatsApp.';
+  }
+
+  if (status === 422 || msg.indexOf('from') !== -1 || msg.indexOf('domain') !== -1) {
+    return 'Adresa pošiljaoca nije verifikovana. Proverite Resend domen dentana.rs. Pozovite nas ili pišite na WhatsApp.';
+  }
+
+  if (status === 429) {
+    return 'Previše zahteva u kratkom vremenu. Pokušajte ponovo za nekoliko minuta ili nas pozovite.';
+  }
+
+  console.error('Resend error:', status, bodyText, { from: from, to: to });
+  return 'Slanje emaila nije uspelo. Pozovite +381 63 349 128 ili pišite na WhatsApp.';
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -31,7 +63,9 @@ export async function onRequestPost(context) {
   }
 
   if (!env.RESEND_API_KEY) {
-    return json({ error: 'Email servis nije konfigurisan.' }, 503);
+    return json({
+      error: 'Email servis nije konfigurisan (RESEND_API_KEY). Kontaktirajte ordinaciju telefonom.',
+    }, 503);
   }
 
   const to = env.BOOKING_TO || 'info@dentana.rs';
@@ -64,9 +98,10 @@ export async function onRequestPost(context) {
   });
 
   if (!res.ok) {
-    const err = await res.text();
-    console.error('Resend error:', err);
-    return json({ error: 'Slanje emaila nije uspelo.' }, 502);
+    const errText = await res.text();
+    return json({
+      error: resendErrorMessage(res.status, errText, from, to),
+    }, 502);
   }
 
   return json({ ok: true });
