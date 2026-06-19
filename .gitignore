@@ -1,4 +1,5 @@
 tools/node_modules/
+tools/package-lock.json
 site/
 extracted-final/
 img/*.jpg
