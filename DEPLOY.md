@@ -52,7 +52,7 @@ Sajt se deploy-uje kao **Cloudflare Worker** sa statičkim assetima:
 |-----------|----------|
 | `RESEND_API_KEY` | API ključ *(Cloudflare Secrets — ručno)* |
 | `BOOKING_TO` | `info@dentana.rs` *(u wrangler.jsonc)* |
-| `BOOKING_FROM` | `Dentana Pro <noreply@dentana.rs>` *(u wrangler.jsonc)* |
+| `BOOKING_FROM` | `Dentana Pro <noreply@servoteh.com>` *(u wrangler.jsonc)* |
 
 > `RESEND_API_KEY` ostaje Secret u Cloudflare dashboardu. `BOOKING_*` se deploy-uju iz `wrangler.jsonc` pri svakom push-u.
 

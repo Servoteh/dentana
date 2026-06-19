@@ -145,7 +145,7 @@ dentana/
 |-----------|----------|--------|
 | `RESEND_API_KEY` | Resend API ključ | ✅ u Cloudflare Secrets (ručno) |
 | `BOOKING_TO` | `info@dentana.rs` | ✅ u `wrangler.jsonc` |
-| `BOOKING_FROM` | `Dentana Pro <noreply@dentana.rs>` | ✅ u `wrangler.jsonc` |
+| `BOOKING_FROM` | `Dentana Pro <noreply@servoteh.com>` | ✅ u `wrangler.jsonc` |
 
 ---
 

@@ -9,7 +9,7 @@
   },
   "vars": {
     "BOOKING_TO": "info@dentana.rs",
-    "BOOKING_FROM": "Dentana Pro <noreply@dentana.rs>"
+    "BOOKING_FROM": "Dentana Pro <noreply@servoteh.com>"
   },
   "assets": {
     "directory": ".",

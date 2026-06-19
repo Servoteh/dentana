@@ -20,13 +20,13 @@ function resendErrorMessage(status, bodyText, from, to) {
 
   if (status === 403) {
     if (from.indexOf('resend.dev') !== -1) {
-      return 'Test email može stići samo na Resend nalog dok se domen dentana.rs ne verifikuje. Pozovite nas ili pišite na WhatsApp.';
+      return 'Test email može stići samo na Resend nalog dok se domen ne verifikuje. Pozovite nas ili pišite na WhatsApp.';
     }
-    return 'Domen za slanje emaila nije verifikovan u Resend-u (dentana.rs). Pozovite nas ili pišite na WhatsApp.';
+    return 'Domen za slanje emaila nije verifikovan u Resend-u (servoteh.com). Pozovite nas ili pišite na WhatsApp.';
   }
 
   if (status === 422 || msg.indexOf('from') !== -1 || msg.indexOf('domain') !== -1) {
-    return 'Adresa pošiljaoca nije verifikovana. Proverite Resend domen dentana.rs. Pozovite nas ili pišite na WhatsApp.';
+    return 'Adresa pošiljaoca nije verifikovana. Proverite Resend domen servoteh.com. Pozovite nas ili pišite na WhatsApp.';
   }
 
   if (status === 429) {
@@ -69,7 +69,7 @@ export async function onRequestPost(context) {
   }
 
   const to = env.BOOKING_TO || 'info@dentana.rs';
-  const from = env.BOOKING_FROM || 'Dentana Pro <noreply@dentana.rs>';
+  const from = env.BOOKING_FROM || 'Dentana Pro <noreply@servoteh.com>';
   const subject = 'Zakazivanje termina — Dentana Pro';
   const text = [
     'Novi zahtev za termin sa sajta dentana.rs',
