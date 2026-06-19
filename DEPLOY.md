@@ -45,8 +45,9 @@ Sajt se deploy-uje kao **Cloudflare Worker** sa statičkim assetima:
 
 ## Resend (forma)
 
-1. [resend.com](https://resend.com) → API key
-2. Workers → **dentana** → **Settings** → **Variables**:
+1. [resend.com](https://resend.com) → API key (Servoteh nalog)
+2. **Domains** → verifikuj **`servoteh.com`** (DKIM/SPF u DNS-u za servoteh.com)
+3. Workers → **dentana** → **Settings** → **Variables**:
 
 | Varijabla | Vrednost |
 |-----------|----------|
