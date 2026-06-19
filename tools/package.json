@@ -1,0 +1,11 @@
+{
+  "name": "dentana-build",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node optimize-images.mjs && node download-fonts.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

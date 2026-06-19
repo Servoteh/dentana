@@ -1,0 +1,19 @@
+tools/node_modules/
+site/
+extracted-final/
+img/*.jpg
+*.zip
+*.docx
+doktorke/
+Nove Ana telefon/
+favicon-32.png
+.DS_Store
+Thumbs.db
+
+# Izvorne fotografije u root-u (nisu deo deploya)
+/*.jpg
+!og-image.jpg
+/*.jpeg
+/*.JPEG
+/*.JPG
+/*.HEIC
