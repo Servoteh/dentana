@@ -1621,6 +1621,25 @@ footer {
   body { padding-bottom: 54px; }
 }
 
+/* ─── Prebacivač jezika ─── */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 14px;
+  padding: 7px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-deep);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.lang-switch:hover { background: var(--accent-soft); color: var(--accent-deep); }
+.mob-lang { font-weight: 700; letter-spacing: 0.08em; }
+@media (max-width: 768px) { .lang-switch { display: none; } }
+
 /* ─── Reduced motion (Faza 2.2) ─── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

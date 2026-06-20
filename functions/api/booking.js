@@ -78,6 +78,7 @@ export async function onRequestPost(context) {
   const usluga = String(body.usluga || '').trim();
   const datum = String(body.datum || '').trim();
   const napomena = String(body.napomena || '').trim();
+  const lang = String(body.lang || 'sr').trim().toLowerCase() === 'en' ? 'EN' : 'SR';
 
   if (!ime || !telefon) {
     return json({ error: 'Ime i telefon su obavezni.' }, 400);
@@ -91,9 +92,10 @@ export async function onRequestPost(context) {
 
   const to = env.BOOKING_TO || 'info@dentana.rs';
   const from = env.BOOKING_FROM || 'Dentana Pro <noreply@servoteh.com>';
-  const subject = 'Zakazivanje termina — Dentana Pro';
+  const subject = `Zakazivanje termina — Dentana Pro${lang === 'EN' ? ' (EN)' : ''}`;
   const text = [
     'Novi zahtev za termin sa sajta dentana.rs',
+    `Jezik upita: ${lang}${lang === 'EN' ? ' — odgovoriti na engleskom' : ''}`,
     '',
     `Ime i prezime: ${ime}`,
     `Telefon: ${telefon}`,

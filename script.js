@@ -138,6 +138,18 @@
   var defaultNote = statusEl ? statusEl.textContent : '';
   var datumEl = document.getElementById('datum');
   var consentEl = document.getElementById('saglasnost');
+  var isEn = document.documentElement.lang === 'en';
+  var MSG = isEn ? {
+    sending: 'Sending request…',
+    success: 'Thank you! We received your request — we will contact you soon to confirm the appointment.',
+    error: 'Sending failed. Please try by phone or WhatsApp.',
+    errorCall: 'Sending failed. Please call +381 63 349 128 or message us on WhatsApp.'
+  } : {
+    sending: 'Slanje zahteva...',
+    success: 'Hvala! Primili smo zahtev — javićemo vam se uskoro radi potvrde termina.',
+    error: 'Greška pri slanju. Pokušajte telefonom ili WhatsApp.',
+    errorCall: 'Greška pri slanju. Pozovite +381 63 349 128 ili pišite na WhatsApp.'
+  };
 
   // Datum: ne dozvoli izbor prošlog datuma
   if (datumEl) {
@@ -185,7 +197,7 @@
 
     if (btn) btn.disabled = true;
     if (statusEl) {
-      statusEl.textContent = 'Slanje zahteva...';
+      statusEl.textContent = MSG.sending;
       statusEl.className = 'booking-note';
     }
 
@@ -202,6 +214,7 @@
         datum: datum,
         napomena: napomena,
         website: website,
+        lang: document.documentElement.lang || 'sr',
         turnstileToken: tsEl ? tsEl.value : ''
       })
     })
@@ -215,18 +228,18 @@
         if (res.ok) {
           form.reset();
           if (statusEl) {
-            statusEl.textContent = 'Hvala! Primili smo zahtev — javićemo vam se uskoro radi potvrde termina.';
+            statusEl.textContent = MSG.success;
             statusEl.className = 'booking-note booking-note--success';
           }
         } else if (statusEl) {
-          statusEl.textContent = (res.data && res.data.error) || 'Greška pri slanju. Pokušajte telefonom ili WhatsApp.';
+          statusEl.textContent = (!isEn && res.data && res.data.error) || MSG.error;
           statusEl.className = 'booking-note booking-note--error';
         }
       })
       .catch(function () {
         if (btn) btn.disabled = false;
         if (statusEl) {
-          statusEl.textContent = 'Greška pri slanju. Pozovite +381 63 349 128 ili pišite na WhatsApp.';
+          statusEl.textContent = MSG.errorCall;
           statusEl.className = 'booking-note booking-note--error';
         }
       });
@@ -340,24 +353,12 @@
   var labelEl  = document.getElementById('radovi-label');
   if (!mainImg || !thumbEls.length) return;
 
-  var labels = [
-    'Bezmetalne cirkon keramicke krune',
-    'Bezmetalne cirkon keramicke krune',
-    'Metalokeramicke krune — pre/posle',
-    'Resavanje recesija na zubima',
-    'Ortodontska terapija progenije',
-    'Bezmetalne cirkon keramicke krune',
-    'Ortodontska terapija progenije',
-    'Metalokeramicki mostovi',
-    'Kompozitne fasete i zatvaranje dijasteme',
-    'Gingivektomija',
-    'Resavanje recesija na zubima'
-  ];
-
+  // Labele se čitaju iz data-label atributa (izvor istine je HTML) — radi i za SR i za EN
+  var labels  = [];
   var srcs    = [];
   var current = 0;
   var total   = thumbEls.length;
-  thumbEls.forEach(function (t) { srcs.push(t.src); });
+  thumbEls.forEach(function (t) { srcs.push(t.src); labels.push(t.dataset.label || ''); });
 
   function setActive(idx) {
     current = (idx + total) % total;
