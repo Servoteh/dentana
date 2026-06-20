@@ -7,29 +7,55 @@ Osnova: analiza produkcijske verzije (`root/`) koja je deployovana na `dentana.r
 
 ---
 
-## ✅ Urađeno u kodu (20. jun 2026.)
+## ✅ Urađeno i LIVE (20. jun 2026.)
 
-Spremno za `git commit` + push (pregledati lokalno pre deploya):
+Sve deployovano na `dentana.rs` (Cloudflare Workers, auto-deploy na `git push`).
 
-- **Faza 0:** obrisani stale folderi `site/` i `extracted-final/`
-- **Faza 1.2:** FAQ sekcija (`#cesta-pitanja`, native `<details>`) + `FAQPage` JSON-LD
-- **Faza 1.1:** šablon sekcije „Utisci pacijenata" (zakomentarisan u `index.html` dok ne stignu prave recenzije)
-- **Faza 1.3:** forma — `required`/`autocomplete`, min datum (nema prošlih), inline greške po polju, **checkbox saglasnosti** (ZZPL)
-- **Faza 1.4:** obogaćen `Dentist` JSON-LD (addressRegion, medicalSpecialty, areaServed, hasMap, contactPoint, availableLanguage) + `WebSite` schema
-- **Faza 2.1:** a11y — hamburger `aria-expanded`/`aria-controls`, `Esc` zatvara meni, focus management u lightbox-ovima, `aria-hidden` na dekorativnim emoji ikonama
-- **Faza 2.2:** logo bez `lazy` (iznad preloma), slajderi poštuju `prefers-reduced-motion` i pauziraju se van ekrana (IntersectionObserver)
-- **Faza 2.3:** Plausible analitika (zakomentarisana) + Turnstile scaffold (server-side verifikacija u `booking.js`, aktivira se kad postoji `TURNSTILE_SECRET`)
-- **Faza 1.5:** 8 zasebnih stranica po uslugama na `/usluge/<usluga>/` (implanti, pregledi-i-lecenje-zuba, oralna-hirurgija, ortodoncija, protetika, parodontologija, decja-stomatologija, estetika-lica) — svaka sa jedinstvenim title/meta/canonical, breadcrumb, proširenim sadržajem, MedicalProcedure/MedicalWebPage + BreadcrumbList + FAQPage schema; navigacija i kartice na početnoj povezane; sitemap proširen (9 URL-ova)
-- **Faza 0:** stari URL-ovi (21 iz 2017) → 301 na nove sekcije (`_redirects`)
+**Faza 0 — infrastruktura**
+- Obrisani stale folderi `site/` i `extracted-final/`
+- `www` → apex radi; sitemap poslat u Google Search Console ✅ (uradio korisnik)
+- Stari `.html` URL-ovi (21 iz 2017) → **301 na prave stranice usluga** (`_redirects`)
+
+**Faza 1 — konverzija i SEO**
+- 1.1 **Utisci pacijenata** — aktivna sekcija `#utisci`: ocena **5,0 / 47 Google recenzija** + 6 realnih utisaka (SR i EN). *Bez* `aggregateRating` markup-a (Google self-serving pravilo) — zvezdice dolaze sa Google Business profila.
+- 1.2 **FAQ** (`#cesta-pitanja`) sa direktnim odgovorima + `FAQPage` schema
+- 1.3 **Forma** — `required`/`autocomplete`, min datum, inline greške, checkbox saglasnosti (ZZPL)
+- 1.4 **JSON-LD** — `Dentist` (addressRegion, medicalSpecialty, areaServed, hasMap, contactPoint, availableLanguage) + `WebSite` + `sameAs` Instagram; `FAQ`/`Breadcrumb`/`MedicalProcedure` po stranama
+- 1.5 **8 zasebnih stranica usluga** `/usluge/<usluga>/` — jedinstven title/meta/canonical, breadcrumb, prošireni sadržaj, schema; navigacija/kartice povezane
+
+**Faza 2 — a11y / performanse / merenje**
+- a11y: hamburger `aria-expanded`/`aria-controls`, `Esc`, focus management u lightbox-u, `aria-hidden` ikone
+- perf: logo bez `lazy`, slajderi poštuju `prefers-reduced-motion` + pauza van ekrana
+- Plausible (zakomentarisan) + Turnstile scaffold (`booking.js`, aktivan kad postoji `TURNSTILE_SECRET`)
+
+**Dizajn / konverzija**
+- Mikro-CTA trake između sekcija + **sticky mobilna traka** (Pozovi / WhatsApp)
+- Popravljen „Usluge" dropdown (most preko praznine + grace period)
+- Ispravljeni razdvojeni H1 naslovi (cela reč u DOM-u) — SR i EN
+- Instagram link u footeru (SR i EN)
+
+**Faza 3 — Engleska (EN) verzija** ✅
+- `/en/` početna + 8 EN stranica usluga (engleski slugovi: dental-implants, general-dentistry, oral-surgery, orthodontics, prosthetics, periodontics→„Gum Treatment", pediatric-dentistry, facial-aesthetics)
+- Prebacivač jezika **EN ⇄ SR** (header + mobilni meni), `hreflang` (sr-RS / en / x-default) na svim stranama
+- EN booking poruke po jeziku; mejl ordinaciji nosi „Jezik upita: EN"
+- US engleski, native-polished copy
+- **Expat landing strana** `/en/dentist-in-belgrade-english-speaking/` (English-speaking team, snimak pre dolaska, plan+procena, plaćanje po fazama, 5,0 Google, istaknute usluge)
+- Ukupno **19 URL-ova** u sitemap-u
 
 ### ⏳ Ostaje na tvojoj strani (nalozi / sadržaj)
 
-- **Cloudflare dashboard:** `www` → apex 301 redirect, SSL Full (strict), Always HTTPS
-- **Google Search Console:** prijava + slanje `sitemap.xml`
-- **Recenzije:** prikupiti prave utiske → otkomentarisati sekciju `#utisci` (tek tada `aggregateRating`)
-- **Geo koordinate i `sameAs`:** tačan pin za Republičku 1a + linkovi ka Instagram/Facebook/Google Business
-- **Plausible:** otvoriti nalog i otkomentarisati skriptu
-- **Turnstile:** napraviti widget (site key) + dodati `TURNSTILE_SECRET` u Secrets
+- **Google Search Console:** ponovo poslati/sačekati re-crawl sitemap-a (sad ima EN + expat URL-ove); opciono „Request indexing" za ključne strane
+- **Google Business link:** poslati tačan link profila → zameniti privremeni Maps-pretraga link na dugmetu recenzija (SR i EN)
+- **Geo koordinate:** tačan pin za Republičku 1a (sad zaokružene 44.768, 20.413)
+- **Facebook:** ako postoji zvanična stranica → dodati u `sameAs` (sad samo Instagram)
+- **Plausible:** otvoriti nalog i otkomentarisati skriptu (u `<head>`)
+- **Turnstile:** napraviti widget (site key) + `TURNSTILE_SECRET` u Cloudflare Secrets
+- **Cloudflare:** proveriti SSL Full (strict) + Always HTTPS
+
+### ⏭️ Opciono za budućnost
+- **FR (francuska) verzija** — ista struktura kao EN, kad/ako zatreba
+- Skraćivanje detaljnih sekcija usluga na SR početnoj u „teaser" (pošto sad postoje zasebne stranice)
+- `Person`/`Physician` schema po doktoru; `width`/`height` na svim slikama (CLS)
 
 ---
 
@@ -111,11 +137,11 @@ Cilj faze: više zakazivanja i bolja vidljivost u pretrazi.
 
 ---
 
-## FAZA 3 — Višejezičnost: FR + EN 🇫🇷 🇬🇧
+## FAZA 3 — Višejezičnost 🇬🇧 🇫🇷
 
-Radi se **na kraju**, kad je srpski sadržaj finalizovan.
-Prioritet: **francuski (FR)** — značajan broj pacijenata dolazio je iz Francuske (dental-turizam).
-Zatim **engleski (EN)** kao opšti jezik za ostale strane pacijente.
+> **Status: EN ZAVRŠEN i LIVE.** Engleska verzija (`/en/`) je gotova — detalji u sekciji „Urađeno i LIVE" gore. FR ostaje opciono za budućnost.
+
+Originalni plan (referenca):
 
 ### Pristup
 - [ ] Struktura: `dentana.rs/fr/` i `dentana.rs/en/` (zasebne rute/folderi)

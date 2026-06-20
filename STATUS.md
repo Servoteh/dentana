@@ -17,7 +17,26 @@ Sajt je prebačen sa nginx VPS-a (`176.9.113.163`) na **Cloudflare Workers**. Iz
 | Forma za termin | ✅ Radi — Resend |
 | Slanje emaila | ✅ `noreply@servoteh.com` → `info@dentana.rs` |
 | Primanje emaila `info@` | ✅ MX → VPS (nije dirano) |
-| `www.dentana.rs` | ⏳ DNS propagacija (CNAME / Worker domen dodat) |
+| `www.dentana.rs` | ✅ Radi (DNS propagiran) |
+| Engleska verzija `/en/` | ✅ Live (dvojezičan sajt) |
+
+---
+
+## Razvoj sajta — ZAVRŠENO ✅ (20. jun 2026.)
+
+Nakon migracije, urađen ceo paket unapređenja (detalji u [PLAN.md](PLAN.md)):
+
+- **SEO/sadržaj:** FAQ sa direktnim odgovorima + `FAQPage` schema; obogaćen `Dentist` JSON-LD; `_redirects` (stari 2017 URL-ovi → prave stranice usluga)
+- **8 stranica po uslugama** `/usluge/<usluga>/` (jedinstven SEO, breadcrumb, schema)
+- **Utisci pacijenata** — sekcija sa 5,0 / 47 Google recenzija + 6 realnih utisaka
+- **Forma** — validacija, inline greške, checkbox saglasnosti (ZZPL), jezik upita u mejlu
+- **a11y + performanse** — aria, focus management, `prefers-reduced-motion`, pauza slajdera
+- **Konverzija** — mikro-CTA trake, sticky mobilna traka (Pozovi/WhatsApp), popravljen dropdown
+- **Engleska (EN) verzija** — `/en/` + 8 EN stranica usluga + expat landing strana (`/en/dentist-in-belgrade-english-speaking/`), prebacivač jezika EN⇄SR, `hreflang`, native-polished copy
+- **Instagram** u footeru + `sameAs`; sitemap **19 URL-ova**
+
+> Build stranica usluga (SR/EN): generator skripte u scratchpad-u
+> (`gen-site.js` + `usluge-data.js` + `en-data.js`) — izlaz su statički `.html` fajlovi u repo-u.
 
 ---
 
@@ -77,27 +96,18 @@ Sajt je prebačen sa nginx VPS-a (`176.9.113.163`) na **Cloudflare Workers**. Iz
 
 ## Preostalo (sitnice)
 
-- [ ] `www.dentana.rs` — sačekati DNS (5 min – 2 h), pa proveriti
-- [ ] Redirect Rule: `www.dentana.rs` → `https://dentana.rs` (301) u Cloudflare
-- [ ] Google Search Console + sitemap `https://dentana.rs/sitemap.xml`
+- [x] `www.dentana.rs` — radi
+- [x] Google Search Console + sitemap
 - [ ] SSL Full (strict) + Always HTTPS — proveriti u dashboardu
 - [ ] Obrisati DNS zapise `ftp`, `m` ako se ne koriste
 - [ ] Posle 1–2 nedelje: ugasiti **web** na starom VPS-u (mail ostaje)
+- [ ] Sitnice iz [PLAN.md](PLAN.md): Google Business link, tačne geo koordinate, Facebook, Plausible, Turnstile
 
 ---
 
-## Plan od sutra — razvoj sajta
+## Razvoj sajta — ZAVRŠENO
 
-Migracija i infrastruktura su gotovi. Sledeća faza je **planiranje i unapređenje sadržaja/izgleda**:
-
-### Teme za razgovor
-
-1. **Sadržaj** — nove sekcije, tekstovi, usluge, tim
-2. **Slike** — zamena / dodavanje fotografija (folder `doktorke/`, izvorni JPG u root-u)
-3. **SEO** — meta tagovi po uslugama, blog/članci?
-4. **Funkcionalnosti** — Turnstile captcha, Google Analytics, online zakazivanje
-5. **Performanse** — dalja optimizacija ako treba
-6. **Jezik** — sr/en verzija?
+Faza unapređenja sadržaja/izgleda + dvojezičnost (EN) su **gotovi i live** — vidi „Razvoj sajta — ZAVRŠENO" gore i [PLAN.md](PLAN.md). Preostalo su samo sitnice koje traže naloge/podatke (gore).
 
 ### Kako radimo izmene
 
