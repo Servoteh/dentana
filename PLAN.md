@@ -19,6 +19,8 @@ Spremno za `git commit` + push (pregledati lokalno pre deploya):
 - **Faza 2.1:** a11y — hamburger `aria-expanded`/`aria-controls`, `Esc` zatvara meni, focus management u lightbox-ovima, `aria-hidden` na dekorativnim emoji ikonama
 - **Faza 2.2:** logo bez `lazy` (iznad preloma), slajderi poštuju `prefers-reduced-motion` i pauziraju se van ekrana (IntersectionObserver)
 - **Faza 2.3:** Plausible analitika (zakomentarisana) + Turnstile scaffold (server-side verifikacija u `booking.js`, aktivira se kad postoji `TURNSTILE_SECRET`)
+- **Faza 1.5:** 8 zasebnih stranica po uslugama na `/usluge/<usluga>/` (implanti, pregledi-i-lecenje-zuba, oralna-hirurgija, ortodoncija, protetika, parodontologija, decja-stomatologija, estetika-lica) — svaka sa jedinstvenim title/meta/canonical, breadcrumb, proširenim sadržajem, MedicalProcedure/MedicalWebPage + BreadcrumbList + FAQPage schema; navigacija i kartice na početnoj povezane; sitemap proširen (9 URL-ova)
+- **Faza 0:** stari URL-ovi (21 iz 2017) → 301 na nove sekcije (`_redirects`)
 
 ### ⏳ Ostaje na tvojoj strani (nalozi / sadržaj)
 
