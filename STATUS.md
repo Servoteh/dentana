@@ -4,6 +4,8 @@ Poslednje ažuriranje: **20. jun 2026.**
 
 Repozitorijum: [github.com/Servoteh/dentana](https://github.com/Servoteh/dentana)
 
+> ✅ **Status: ZAVRŠENO i LIVE.** Migracija + kompletan razvoj (SR sajt, stranice po uslugama, recenzije, FAQ, EN verzija + expat strana) su gotovi i potvrđeni u produkciji. Sajt ostaje u ovom stabilnom stanju; preostale stavke su opcione (vidi „Preostalo" i [PLAN.md](PLAN.md)).
+
 ---
 
 ## Migracija — ZAVRŠENA ✅

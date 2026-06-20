@@ -3,6 +3,8 @@
 Kreirano: **20. jun 2026.**
 Osnova: analiza produkcijske verzije (`root/`) koja je deployovana na `dentana.rs`.
 
+> ✅ **FINALNO (20. jun 2026.):** Sve faze (0–3) su završene, deployovane i **potvrđene live** — dvojezičan sajt (SR + EN), stranice po uslugama, recenzije, FAQ, konverzione trake, expat strana. Sajt ostaje u ovom (stabilnom) stanju. Preostale su samo opcione sitnice (vidi „Ostaje na tvojoj strani").
+
 > Napomena: analiza je rađena na **root** fajlovima (jedina deployovana verzija — `wrangler.jsonc` isključuje `site/**`).
 
 ---
