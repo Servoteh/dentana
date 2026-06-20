@@ -1567,6 +1567,38 @@ footer {
   .cta-band .btn { width: 100%; }
 }
 
+/* ─── Sticky mobilna traka (Pozovi / WhatsApp) ─── */
+.mobile-cta-bar { display: none; }
+@media (max-width: 768px) {
+  .mobile-cta-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 90;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -6px 22px rgba(27,31,35,0.10);
+  }
+  .mcta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px 8px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+  }
+  .mcta-call { color: var(--accent-deep); }
+  .mcta-call:active { background: var(--accent-soft); }
+  .mcta-wa { color: #fff; background: #25D366; }
+  /* na mobilnom traka zamenjuje plutajuće WhatsApp dugme */
+  .wa-float { display: none; }
+  /* da footer/sadržaj ne ostane skriven iza fiksne trake */
+  body { padding-bottom: 54px; }
+}
+
 /* ─── Reduced motion (Faza 2.2) ─── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
