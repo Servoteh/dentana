@@ -20,6 +20,9 @@
   var navLogo = document.querySelector('.nav-logo');
   if (navLogo) {
     navLogo.addEventListener('click', function (e) {
+      // Na podstranicama pusti link da odvede na početnu (href="/")
+      var onHome = location.pathname === '/' || location.pathname === '/index.html';
+      if (!onHome) return;
       e.preventDefault();
       header.style.transition = 'none';
       header.classList.remove('scrolled');
