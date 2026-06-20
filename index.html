@@ -90,7 +90,10 @@
     SEO TODO (Faza 1.4):
     1. Proveriti geo koordinate (44.768, 20.413 su zaokružene) — uzeti tačne sa Google Maps za Republičku 1a.
     2. U "sameAs" dodati prave linkove ka Instagram / Facebook / Google Business profilu kad budu dostupni.
-    3. NE dodavati "aggregateRating" dok ne postoje stvarne recenzije — lažni rejting krši Google smernice.
+    3. "aggregateRating" markup NIJE dodat namerno: Google ne priznaje "self-serving" rejting
+       (ordinacija ocenjuje samu sebe na svom sajtu) za LocalBusiness — zvezdice u pretrazi
+       dolaze sa Google Business profila (Maps/local pack), gde je 5,0 / 47 recenzija već vidljivo.
+       Recenzije se prikazuju vizuelno u sekciji #utisci (potpuno u skladu sa smernicama).
   -->
   <script type="application/ld+json">
   {
@@ -834,39 +837,54 @@
         </div>
     </div>
   </section>
-<!-- ════════════════════════════════════════════════════════════════
-     FAZA 1.1 — UTISCI PACIJENATA (ŠABLON)
-     Sekcija je namerno ZAKOMENTARISANA dok ne dobijete prave recenzije.
-     Kada budete imali stvarne utiske (npr. sa Google profila), uklonite
-     komentar i zamenite tekst/imena. Tek tada se sme dodati i
-     "aggregateRating" u JSON-LD (lažne recenzije krše Google smernice).
-
-  <section class="section reviews" id="utisci" style="background:var(--surface);">
+<section class="section reviews" id="utisci" style="background:var(--surface);">
     <div class="container">
       <div class="section-header-center--mb">
         <div class="eyebrow reveal">Utisci pacijenata</div>
-        <h2 class="reveal">Šta kažu <em>naši pacijenti</em></h2>
+        <h2 class="reveal">Ocena <em>5,0</em> na Google-u</h2>
+        <div class="reviews-summary reveal">
+          <span class="reviews-stars" aria-hidden="true">★★★★★</span>
+          <span class="reviews-score">5,0</span>
+          <span class="reviews-count">· 47 recenzija</span>
+        </div>
       </div>
       <div class="reviews-grid">
         <figure class="review-card reveal">
           <div class="review-stars" aria-hidden="true">★★★★★</div>
-          <blockquote>„[Ovde ide stvarna recenzija pacijenta.]"</blockquote>
-          <figcaption>— Ime P.</figcaption>
+          <blockquote>„Ljubazan, nasmejan, nežan i profesionalan tim Dentana Pro. Moja deca, suprug i ja smo redovni pacijenti. Uvek su tu da vas ljubazno i stručno posavetuju i razreše sve strahove i nedoumice. Sve preporuke, zauvek."</blockquote>
+          <figcaption>Aleksandra Rop · <span class="text-muted">Google recenzija</span></figcaption>
         </figure>
         <figure class="review-card reveal">
           <div class="review-stars" aria-hidden="true">★★★★★</div>
-          <blockquote>„[Ovde ide stvarna recenzija pacijenta.]"</blockquote>
-          <figcaption>— Ime P.</figcaption>
+          <blockquote>„Bez preterivanja — počeo sam da strepim od odlaska kod zubara i mislio da supruga preteruje kad ih hvali, ali… Ljubazni do maksimuma, fleksibilni, kooperativni, strpljivi. Ana, Tijana, Zorica… sve preporuke."</blockquote>
+          <figcaption>Nikola Jovanović · <span class="text-muted">Google recenzija</span></figcaption>
         </figure>
         <figure class="review-card reveal">
           <div class="review-stars" aria-hidden="true">★★★★★</div>
-          <blockquote>„[Ovde ide stvarna recenzija pacijenta.]"</blockquote>
-          <figcaption>— Ime P.</figcaption>
+          <blockquote>„Naš porodični zubar! Veoma ljubazni i uvek spremni da pomognu i brinu o našem osmehu 😊"</blockquote>
+          <figcaption>Marija Pribojac · <span class="text-muted">Google recenzija</span></figcaption>
         </figure>
+        <figure class="review-card reveal">
+          <div class="review-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„Sjajno iskustvo, sve preporuke za dr Tijanu! Izuzetno profesionalna, temeljna, divna 😊"</blockquote>
+          <figcaption>Maja Zec · <span class="text-muted">Google recenzija</span></figcaption>
+        </figure>
+        <figure class="review-card reveal">
+          <div class="review-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„Veliko hvala divnoj Ani i koleginicama na sjajnoj usluzi! Odlični saveti, organizacija, higijena!"</blockquote>
+          <figcaption>Andrea Gojković · <span class="text-muted">Google recenzija</span></figcaption>
+        </figure>
+        <figure class="review-card reveal">
+          <div class="review-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„Nedavno sam posetila ordinaciju i izuzetno sam zadovoljna uslugom. Od ulaska me je dočekala prijatna i profesionalna atmosfera."</blockquote>
+          <figcaption>Mica Ignjatović · <span class="text-muted">Google recenzija</span></figcaption>
+        </figure>
+      </div>
+      <div style="text-align:center;margin-top:36px;">
+        <a class="btn btn-secondary" href="https://www.google.com/maps/search/?api=1&query=Dentana%20Pro%20Republi%C4%8Dka%201a%20Beograd" target="_blank" rel="noopener noreferrer">Pogledajte sve recenzije na Google-u</a>
       </div>
     </div>
   </section>
-     ════════════════════════════════════════════════════════════════ -->
 
 <section class="section faq" id="cesta-pitanja" style="background:var(--surface);">
     <div class="container">
