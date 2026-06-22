@@ -17,8 +17,8 @@ Sajt je prebačen sa nginx VPS-a (`176.9.113.163`) na **Cloudflare Workers**. Iz
 | Sajt `dentana.rs` | ✅ Cloudflare Workers |
 | DNS Cloudflare | ✅ Active |
 | Forma za termin | ✅ Radi — Resend |
-| Slanje emaila | ✅ `noreply@servoteh.com` → `info@dentana.rs` |
-| Primanje emaila `info@` | ✅ MX → VPS (nije dirano) |
+| Slanje emaila (forma) | ✅ `noreply@servoteh.com` → `dentanapro@gmail.com` |
+| Kontakt email (sajt) | ✅ `dentanapro@gmail.com` (info@ se ne koristi — ne stiže) |
 | `www.dentana.rs` | ✅ Radi (DNS propagiran) |
 | Engleska verzija `/en/` | ✅ Live (dvojezičan sajt) |
 
@@ -148,7 +148,7 @@ npx wrangler dev
 | | |
 |---|---|
 | Domen | dentana.rs |
-| Email ordinacije | info@dentana.rs |
+| Email ordinacije | dentanapro@gmail.com |
 | Mail server | mail.dentana.rs → 176.9.113.163 (VPS) |
 | Web hosting (novi) | Cloudflare Workers |
 | Email slanje (forma) | Resend / servoteh.com |
