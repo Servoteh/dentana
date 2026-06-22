@@ -69,7 +69,7 @@ Nakon migracije, urađen ceo paket unapređenja (detalji u [PLAN.md](PLAN.md)):
 - [x] Honeypot, poruke uspeha/greške
 - [x] `RESEND_API_KEY` u Cloudflare Secrets
 - [x] `BOOKING_FROM` = `Dentana Pro <noreply@servoteh.com>` (wrangler.jsonc)
-- [x] `BOOKING_TO` = `info@dentana.rs` (wrangler.jsonc)
+- [x] `BOOKING_TO` = `dentanapro@gmail.com` (wrangler.jsonc) — gde stižu prijave sa forme
 - [x] Domen **servoteh.com** verifikovan u Resend-u
 - [x] Test slanja — **radi**
 
@@ -124,7 +124,7 @@ Faza unapređenja sadržaja/izgleda + dvojezičnost (EN) su **gotovi i live** �
 | Varijabla | Vrednost | Gde |
 |-----------|----------|-----|
 | `RESEND_API_KEY` | Resend API ključ | Cloudflare Secrets |
-| `BOOKING_TO` | `info@dentana.rs` | `wrangler.jsonc` |
+| `BOOKING_TO` | `dentanapro@gmail.com` | `wrangler.jsonc` |
 | `BOOKING_FROM` | `Dentana Pro <noreply@servoteh.com>` | `wrangler.jsonc` |
 
 ---

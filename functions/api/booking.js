@@ -90,7 +90,7 @@ export async function onRequestPost(context) {
     }, 503);
   }
 
-  const to = env.BOOKING_TO || 'info@dentana.rs';
+  const to = env.BOOKING_TO || 'dentanapro@gmail.com';
   const from = env.BOOKING_FROM || 'Dentana Pro <noreply@servoteh.com>';
   const subject = `Zakazivanje termina — Dentana Pro${lang === 'EN' ? ' (EN)' : ''}`;
   const text = [
