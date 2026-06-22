@@ -1514,7 +1514,21 @@ footer {
 .field.has-error select { border-color: #e3a8a0; box-shadow: 0 0 0 4px rgba(180,35,24,0.08); }
 .field.has-error .field-error { display: block; }
 .field-consent { grid-column: 1 / -1; display: flex; gap: 10px; align-items: flex-start; }
-.field-consent input { width: auto; margin-top: 3px; flex: none; }
+.field-consent input[type="checkbox"] {
+  -webkit-appearance: auto;
+  appearance: auto;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  padding: 0;
+  margin: 3px 0 0;
+  border-radius: 4px;
+  flex: none;
+  cursor: pointer;
+  accent-color: var(--accent);
+  box-shadow: none;
+}
+.field-consent label { cursor: pointer; }
 .field-consent label {
   text-transform: none;
   letter-spacing: normal;
